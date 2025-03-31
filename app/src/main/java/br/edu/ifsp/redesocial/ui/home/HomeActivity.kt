@@ -20,8 +20,10 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupListener() {
-        firebaseAuth.signOut()
-        startActivity(Intent(this,MainActivity::class.java))
-        finish()
+        binding.buttonLogout.setOnClickListener {
+            firebaseAuth.signOut()
+            startActivity(Intent(this,MainActivity::class.java))
+            finish()
+        }
     }
 }
