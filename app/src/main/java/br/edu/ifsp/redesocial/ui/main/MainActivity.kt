@@ -17,10 +17,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupButton()
+        setupListener()
+        checkUser()
     }
 
-    private fun setupButton() {
+    private fun checkUser() {
+        if(firebaseAuth.currentUser!=null){
+            launchHome()
+        }
+    }
+
+    private fun setupListener() {
         binding.buttonLogin.setOnClickListener {
             val email = binding.textEmail.text.toString()
             val senha = binding.textSenha.text.toString()
@@ -28,12 +35,16 @@ class MainActivity : AppCompatActivity() {
                 .signInWithEmailAndPassword(email,senha)
                 .addOnCompleteListener { task ->
                     if(task.isSuccessful){
-                        startActivity(Intent(this, HomeActivity::class.java))
-                        finish()
+                        launchHome()
                     }else{
                         Toast.makeText(this, "Erro no Login", Toast.LENGTH_LONG).show()
                     }
                 }
         }
+    }
+
+    private fun launchHome(){
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish()
     }
 }
