@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Rede Social</string>
+    <string name="desc_logo">Logo do aplicativo.</string>
+    <string name="hint_email">Digite seu email</string>
+    <string name="hint_password">Digite sua senha</string>
+    <string name="btn_login">Login</string>
 </resources>
