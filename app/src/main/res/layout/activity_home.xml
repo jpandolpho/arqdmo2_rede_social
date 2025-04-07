@@ -8,13 +8,46 @@
     tools:context=".ui.home.HomeActivity">
 
     <ImageView
-        android:id="@+id/logo"
+        android:id="@+id/profile_picture"
         android:layout_width="match_parent"
         android:layout_height="256dp"
-        android:contentDescription="@string/desc_logo"
+        android:contentDescription="@string/profile_picture"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/logo"/>
+        android:src="@drawable/empty_profile"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/username"
+        android:text="@string/username"
+        android:textStyle="italic"
+        android:textSize="22sp"
+        app:layout_constraintTop_toBottomOf="@id/profile_picture"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fullname"
+        android:text="@string/full_name"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/username"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_profile"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="@string/edit_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/username" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_logout"
@@ -25,6 +58,6 @@
         android:text="@string/logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logo" />
+        app:layout_constraintTop_toBottomOf="@id/button_profile" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

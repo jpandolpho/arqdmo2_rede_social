@@ -12,4 +12,8 @@
     <string name="text_username">Nome de Usuário (público)</string>
     <string name="text_full_name">Nome Completo</string>
     <string name="text_save">salvar</string>
+    <string name="profile_picture">Foto de Perfil</string>
+    <string name="edit_profile">Alterar Perfil</string>
+    <string name="full_name">Nome Completo</string>
+    <string name="username">Username</string>
 </resources>
