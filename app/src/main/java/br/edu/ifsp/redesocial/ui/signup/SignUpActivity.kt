@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import br.edu.ifsp.redesocial.databinding.ActivitySignUpBinding
-import br.edu.ifsp.redesocial.ui.home.HomeActivity
+import br.edu.ifsp.redesocial.ui.profile.ProfileActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class SignUpActivity : AppCompatActivity() {
@@ -29,7 +29,7 @@ class SignUpActivity : AppCompatActivity() {
                     .createUserWithEmailAndPassword(email, senha)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            startActivity(Intent(this, HomeActivity::class.java))
+                            startActivity(Intent(this, ProfileActivity::class.java))
                             finish()
                         } else {
                             Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()

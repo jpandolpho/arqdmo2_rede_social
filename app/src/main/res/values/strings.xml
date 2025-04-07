@@ -7,4 +7,9 @@
     <string name="logout">Sair</string>
     <string name="hint_confirm">Digite sua senha novamente</string>
     <string name="text_signup">criar conta</string>
+    <string name="empty_profile">Foto de perfil vazia.</string>
+    <string name="change_picture">Alterar foto</string>
+    <string name="text_username">Nome de Usuário (público)</string>
+    <string name="text_full_name">Nome Completo</string>
+    <string name="text_save">salvar</string>
 </resources>
