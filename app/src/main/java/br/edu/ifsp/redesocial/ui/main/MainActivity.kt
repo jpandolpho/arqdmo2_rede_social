@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import br.edu.ifsp.redesocial.databinding.ActivityMainBinding
 import br.edu.ifsp.redesocial.ui.home.HomeActivity
+import br.edu.ifsp.redesocial.ui.signup.SignUpActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -40,6 +41,9 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this, "Erro no Login", Toast.LENGTH_LONG).show()
                     }
                 }
+        }
+        binding.buttonSignup.setOnClickListener {
+            startActivity(Intent(this,SignUpActivity::class.java))
         }
     }
 

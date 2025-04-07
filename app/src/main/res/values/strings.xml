@@ -5,4 +5,6 @@
     <string name="hint_password">Digite sua senha</string>
     <string name="btn_login">Login</string>
     <string name="logout">Sair</string>
+    <string name="hint_confirm">Digite sua senha novamente</string>
+    <string name="text_signup">criar conta</string>
 </resources>
