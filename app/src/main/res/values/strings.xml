@@ -16,4 +16,6 @@
     <string name="edit_profile">Alterar Perfil</string>
     <string name="full_name">Nome Completo</string>
     <string name="username">Username</string>
+    <string name="placeholder_image">Imagem placeholder</string>
+    <string name="description">Descrição</string>
 </resources>
