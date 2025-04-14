@@ -3,11 +3,7 @@ package br.edu.ifsp.redesocial.ui.post
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.ImageView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import br.edu.ifsp.redesocial.R
 import br.edu.ifsp.redesocial.databinding.ActivityPostBinding
 import com.android.volley.Request
 import com.android.volley.toolbox.ImageRequest
@@ -27,13 +23,13 @@ class PostActivity : AppCompatActivity() {
 
     private fun setupServer() {
         val queue = Volley.newRequestQueue(this)
-        val url = "http://192.168.1.66:8080/posts/1"
+        val url = "http://10.105.68.96:8080/posts/1"
         val jsonRequest = JsonObjectRequest(
             Request.Method.GET, url, null,
             { response ->
                 binding.description.text = response.getString("descricao")
                 val queue = Volley.newRequestQueue(this)
-                val urlImage = "http://192.168.1.66:8080/images/" +
+                val urlImage = "http://10.105.68.96:8080/images/" +
                         response.getString("foto")
                 val imageRequest = ImageRequest(urlImage,
                     { response ->

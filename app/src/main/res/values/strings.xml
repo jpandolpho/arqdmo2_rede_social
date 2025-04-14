@@ -18,4 +18,5 @@
     <string name="username">Username</string>
     <string name="placeholder_image">Imagem placeholder</string>
     <string name="description">Descrição</string>
+    <string name="placeholder_text">Placeholder text</string>
 </resources>
