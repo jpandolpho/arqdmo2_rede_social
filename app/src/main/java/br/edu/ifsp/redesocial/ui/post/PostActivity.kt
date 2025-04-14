@@ -19,6 +19,7 @@ import com.android.volley.toolbox.Volley
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
+import kotlin.random.Random
 
 class PostActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPostBinding
@@ -57,7 +58,6 @@ class PostActivity : AppCompatActivity() {
 
         binding.buttonSave.setOnClickListener {
             if (firebaseAuth.currentUser != null){
-                val email = firebaseAuth.currentUser!!.email.toString()
                 val descricao = binding.textDescription.text.toString()
                 val fotoString = Base64Converter.drawableToString(binding.picture.
                 drawable)
@@ -66,7 +66,7 @@ class PostActivity : AppCompatActivity() {
                     "descricao" to descricao,
                     "fotoPost" to fotoString
                 )
-                db.collection("usuarios").document(email)
+                db.collection("posts").document(Random.nextInt().toString())
                     .set(dados)
                     .addOnSuccessListener {
                         startActivity(Intent(this, HomeActivity::class.java))
