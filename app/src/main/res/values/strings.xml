@@ -20,4 +20,6 @@
     <string name="description">Descrição</string>
     <string name="placeholder_text">Placeholder text</string>
     <string name="load_feed">Carregar Feed</string>
+    <string name="add_new_post">Criar novo post</string>
+    <string name="add_photo">Adicionar Foto</string>
 </resources>
