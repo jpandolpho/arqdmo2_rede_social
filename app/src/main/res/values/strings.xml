@@ -22,4 +22,6 @@
     <string name="load_feed">Carregar Feed</string>
     <string name="add_new_post">Criar novo post</string>
     <string name="add_photo">Adicionar Foto</string>
+    <string name="create_post">criar post</string>
+    <string name="add_location">Adicionar Localização</string>
 </resources>

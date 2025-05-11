@@ -1,7 +1,10 @@
 package br.edu.ifsp.redesocial.ui.post
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.location.Address
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.Toast
@@ -9,9 +12,11 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import br.edu.ifsp.redesocial.databinding.ActivityPostBinding
 import br.edu.ifsp.redesocial.ui.home.HomeActivity
 import br.edu.ifsp.redesocial.ui.util.Base64Converter
+import br.edu.ifsp.redesocial.util.LocalizacaoHelper
 import com.android.volley.Request
 import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.JsonObjectRequest
@@ -21,10 +26,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
 import kotlin.random.Random
 
-class PostActivity : AppCompatActivity() {
+class PostActivity : AppCompatActivity(), LocalizacaoHelper.Callback {
     private lateinit var binding: ActivityPostBinding
     private lateinit var galeria: ActivityResultLauncher<PickVisualMediaRequest>
     private val firebaseAuth = FirebaseAuth.getInstance()
+    private val LOCATION_PERMISSION_REQUEST_CODE = 1001
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,15 +62,27 @@ class PostActivity : AppCompatActivity() {
             )
         }
 
+        binding.switchLocation.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked){
+                solicitarLocalizacao()
+            }
+        }
+
         binding.buttonSave.setOnClickListener {
             if (firebaseAuth.currentUser != null){
                 val descricao = binding.textDescription.text.toString()
                 val fotoString = Base64Converter.drawableToString(binding.picture.
                 drawable)
+                val location = if(binding.switchLocation.isChecked){
+                    binding.infoLocation.text.toString()
+                }else{
+                    ""
+                }
                 val db = Firebase.firestore
                 val dados = hashMapOf(
                     "descricao" to descricao,
-                    "fotoPost" to fotoString
+                    "fotoPost" to fotoString,
+                    "localizacao" to location
                 )
                 db.collection("posts").document(Random.nextInt().toString())
                     .set(dados)
@@ -74,5 +92,36 @@ class PostActivity : AppCompatActivity() {
                     }
             }
         }
+    }
+
+    private fun solicitarLocalizacao() {
+        if (ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED
+            &&
+            ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_COARSE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION),
+                LOCATION_PERMISSION_REQUEST_CODE
+            )
+        }else {
+            val localizacaoHelper = LocalizacaoHelper(applicationContext)
+            localizacaoHelper.obterLocalizacaoAtual(this)
+        }
+    }
+
+    override fun onLocalizacaoRecebida(endereco: Address, latitude: Double, longitude: Double) {
+        runOnUiThread {
+            var infos = "${endereco.subAdminArea}, ${endereco.adminArea}"
+            binding.infoLocation.text = infos
+        }
+    }
+
+    override fun onErro(mensagem: String) {
+        System.out.println(mensagem)
     }
 }
