@@ -78,11 +78,13 @@ class PostActivity : AppCompatActivity(), LocalizacaoHelper.Callback {
                 }else{
                     ""
                 }
+                val owner = firebaseAuth.currentUser!!.email.toString()
                 val db = Firebase.firestore
                 val dados = hashMapOf(
                     "descricao" to descricao,
                     "fotoPost" to fotoString,
-                    "localizacao" to location
+                    "localizacao" to location,
+                    "owner" to owner
                 )
                 db.collection("posts").document(Random.nextInt().toString())
                     .set(dados)

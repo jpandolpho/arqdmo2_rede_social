@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="10dp"
     android:elevation="10dp"
+    app:cardCornerRadius="10dp"
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp">
+
+        <TextView
+            android:id="@+id/header_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/placeholder_text"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/post_image"
@@ -21,17 +30,18 @@
             android:scaleType="fitCenter"
             android:src="@drawable/empty_profile"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/header_text" />
 
         <TextView
+            android:id="@+id/post_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/post_text"
-            app:layout_constraintTop_toBottomOf="@id/post_image"
-            app:layout_constraintStart_toStartOf="@id/post_image"
-            app:layout_constraintEnd_toEndOf="@id/post_image"
+            android:layout_marginStart="8dp"
             android:text="@string/placeholder_text"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@id/post_image"
+            app:layout_constraintStart_toStartOf="@id/post_image"
+            app:layout_constraintTop_toBottomOf="@id/post_image" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
