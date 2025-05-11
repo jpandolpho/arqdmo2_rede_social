@@ -79,7 +79,9 @@ class HomeActivity : AppCompatActivity() {
         }
 
         binding.buttonProfile.setOnClickListener{
-            startActivity(Intent(this, ProfileActivity::class.java))
+            val mIntent = Intent(this, ProfileActivity::class.java)
+            mIntent.putExtra("EDIT",true)
+            startActivity(mIntent)
             finish()
         }
 

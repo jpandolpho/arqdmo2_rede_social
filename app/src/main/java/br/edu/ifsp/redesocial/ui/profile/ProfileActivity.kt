@@ -26,6 +26,31 @@ class ProfileActivity : AppCompatActivity() {
 
         setupGallery()
         setupListener()
+        verifyBundle()
+    }
+
+    private fun verifyBundle() {
+        if(intent.extras!=null){
+            insertValues()
+        }
+    }
+
+    private fun insertValues() {
+        val email = firebaseAuth.currentUser!!.email.toString()
+        val db = Firebase.firestore
+        db.collection("usuarios").document(email).get()
+            .addOnCompleteListener { task ->
+                if(task.isSuccessful){
+                    val document = task.result
+                    val fotoString = document.data!!["fotoPerfil"].toString()
+                    val foto = Base64Converter.stringToBitmap(fotoString)
+                    val nome = document.data!!["nomeCompleto"].toString()
+                    val user = document.data!!["username"].toString()
+                    binding.profilePicture.setImageBitmap(foto)
+                    binding.textFullname.setText(nome)
+                    binding.textUsername.setText(user)
+                }
+        }
     }
 
     private fun setupListener() {
