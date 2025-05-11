@@ -24,4 +24,6 @@
     <string name="add_photo">Adicionar Foto</string>
     <string name="create_post">criar post</string>
     <string name="add_location">Adicionar Localização</string>
+    <string name="profile">Perfil</string>
+    <string name="search_city">Digite uma Cidade</string>
 </resources>

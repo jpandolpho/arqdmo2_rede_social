@@ -9,6 +9,7 @@ import br.edu.ifsp.redesocial.databinding.ActivityHomeBinding
 import br.edu.ifsp.redesocial.model.Post
 import br.edu.ifsp.redesocial.ui.main.MainActivity
 import br.edu.ifsp.redesocial.ui.post.PostActivity
+import br.edu.ifsp.redesocial.ui.profile.ProfileActivity
 import br.edu.ifsp.redesocial.ui.util.Base64Converter
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
@@ -31,11 +32,15 @@ class HomeActivity : AppCompatActivity() {
         setupListener()
     }
 
-    private fun setupRecycler() {
+    private fun loadPosts(search: String) {
         val db = Firebase.firestore
         var query = db.collection("posts")
             .orderBy("timestamp", Query.Direction.DESCENDING)
-            .limit(5)
+        if(search!=""){
+            query = query.whereEqualTo("city", search)
+        }else{
+            query = query.limit(5)
+        }
         if(lastTimestamp!=null){
             query = query.startAfter(lastTimestamp)
         }
@@ -73,12 +78,21 @@ class HomeActivity : AppCompatActivity() {
             finish()
         }
 
+        binding.buttonProfile.setOnClickListener{
+            startActivity(Intent(this, ProfileActivity::class.java))
+            finish()
+        }
+
         binding.buttonAddPost.setOnClickListener {
             startActivity(Intent(this, PostActivity::class.java))
         }
 
         binding.buttonLoad.setOnClickListener {
-            setupRecycler()
+            loadPosts("")
+        }
+
+        binding.textlayoutSearch.setEndIconOnClickListener {
+            loadPosts(binding.textCity.text.toString())
         }
     }
 }

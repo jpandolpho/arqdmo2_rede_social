@@ -7,17 +7,50 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeActivity">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textlayout_search"
+        android:layout_width="208dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:hint="@string/search_city"
+        app:endIconDrawable="@drawable/ic_search"
+        app:endIconMode="custom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_profile"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/profile"
+        app:layout_constraintStart_toEndOf="@id/textlayout_search"
+        app:layout_constraintEnd_toStartOf="@id/button_logout"
+        app:layout_constraintTop_toTopOf="@id/textlayout_search"
+        app:layout_constraintBottom_toBottomOf="@id/textlayout_search"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_logout"
         style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/logout"
+        app:layout_constraintStart_toEndOf="@id/button_profile"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/textlayout_search"
+        app:layout_constraintBottom_toBottomOf="@id/textlayout_search"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_load"
@@ -29,7 +62,7 @@
         android:text="@string/load_feed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_logout" />
+        app:layout_constraintTop_toBottomOf="@id/textlayout_search" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/post_list"
@@ -56,6 +89,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="120dp" />
+        app:layout_constraintGuide_begin="125dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
