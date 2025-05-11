@@ -2,7 +2,6 @@ package br.edu.ifsp.redesocial.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.edu.ifsp.redesocial.adapter.PostAdapter
@@ -14,13 +13,12 @@ import br.edu.ifsp.redesocial.ui.util.Base64Converter
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
-import kotlin.math.log
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private val firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var adapter: PostAdapter
-    private lateinit var posts : ArrayList<Post>
+    private lateinit var posts: ArrayList<Post>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,14 +32,17 @@ class HomeActivity : AppCompatActivity() {
         val db = Firebase.firestore
         db.collection("posts").get()
             .addOnCompleteListener { task ->
-                if (task.isSuccessful){
+                if (task.isSuccessful) {
                     val document = task.result
                     posts = ArrayList<Post>()
                     for (document in document.documents) {
                         val imageString = document.data!!["fotoPost"].toString()
                         val bitmap = Base64Converter.stringToBitmap(imageString)
                         val descricao = document.data!!["descricao"].toString()
-                        posts.add(Post(descricao, bitmap))
+                        val city = document.data!!["city"].toString()
+                        val state = document.data!!["state"].toString()
+                        val owner = document.data!!["owner"].toString()
+                        posts.add(Post(descricao, bitmap, city, state, owner))
                     }
                     adapter = PostAdapter(posts.toTypedArray())
                     binding.postList.layoutManager = LinearLayoutManager(this)
@@ -53,7 +54,7 @@ class HomeActivity : AppCompatActivity() {
     private fun setupListener() {
         binding.buttonLogout.setOnClickListener {
             firebaseAuth.signOut()
-            startActivity(Intent(this,MainActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 
@@ -61,7 +62,7 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this, PostActivity::class.java))
         }
 
-        binding.buttonLoad.setOnClickListener{
+        binding.buttonLoad.setOnClickListener {
             setupRecycler()
         }
     }

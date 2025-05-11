@@ -28,6 +28,11 @@ class PostAdapter(private val posts: Array<Post>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.txtDescricao.text = posts[position].getDescricao()
         holder.imgPost.setImageBitmap(posts[position].getFoto())
-        holder.header.text = "${posts[position].getOwner()} - ${posts[position].getLocalizacao()}"
+        val owner = posts[position].getOwner()
+        if(posts[position].getCity()!="" && posts[position].getState()!="") {
+            holder.header.text = "${owner} - ${posts[position].getCity()}, ${posts[position].getState()}"
+        }else{
+            holder.header.text = owner
+        }
     }
 }

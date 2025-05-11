@@ -22,6 +22,7 @@ import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.firebase.Firebase
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
 import kotlin.random.Random
@@ -35,6 +36,7 @@ class PostActivity : AppCompatActivity(), LocalizacaoHelper.Callback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPostBinding.inflate(layoutInflater)
+        solicitarLocalizacao()
         setContentView(binding.root)
 
         setupGallery()
@@ -62,29 +64,27 @@ class PostActivity : AppCompatActivity(), LocalizacaoHelper.Callback {
             )
         }
 
-        binding.switchLocation.setOnCheckedChangeListener { _, isChecked ->
-            if(isChecked){
-                solicitarLocalizacao()
-            }
-        }
-
         binding.buttonSave.setOnClickListener {
             if (firebaseAuth.currentUser != null){
                 val descricao = binding.textDescription.text.toString()
                 val fotoString = Base64Converter.drawableToString(binding.picture.
                 drawable)
-                val location = if(binding.switchLocation.isChecked){
-                    binding.infoLocation.text.toString()
-                }else{
-                    ""
-                }
-                val owner = firebaseAuth.currentUser!!.email.toString()
+                var city = ""
+                var state = ""
                 val db = Firebase.firestore
+                val owner = firebaseAuth.currentUser!!.email.toString()
+                val data = Timestamp.now()
+                if(binding.switchLocation.isChecked){
+                    city = binding.cityLocation.text.toString()
+                    state = binding.stateLocation.text.toString()
+                }
                 val dados = hashMapOf(
                     "descricao" to descricao,
                     "fotoPost" to fotoString,
-                    "localizacao" to location,
-                    "owner" to owner
+                    "city" to city,
+                    "state" to state,
+                    "owner" to owner,
+                    "timestamp" to data
                 )
                 db.collection("posts").document(Random.nextInt().toString())
                     .set(dados)
@@ -118,8 +118,10 @@ class PostActivity : AppCompatActivity(), LocalizacaoHelper.Callback {
 
     override fun onLocalizacaoRecebida(endereco: Address, latitude: Double, longitude: Double) {
         runOnUiThread {
-            var infos = "${endereco.subAdminArea}, ${endereco.adminArea}"
-            binding.infoLocation.text = infos
+            val city = endereco.subAdminArea
+            val state = endereco.adminArea
+            binding.cityLocation.text = city
+            binding.stateLocation.text = state
         }
     }
 
